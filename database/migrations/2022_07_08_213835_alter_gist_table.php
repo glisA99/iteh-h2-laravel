@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('gists', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->string("title");
-            $table->string("url");
-            $table->string("description");
-            $table->foreignId("author_id")->nullable()->constrained()->nullOnDelete();
+        Schema::table('gists', function (Blueprint $table) {
+            $table->integer("comments")->default(0);
+            $table->integer("issues")->default(0);
         });
     }
 
@@ -30,6 +26,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gists');
+        Schema::table('gists', function (Blueprint $table) {
+            $table->removeColumn('comments');
+            $table->removeColumn("issues");
+        });
     }
 };
