@@ -10,10 +10,13 @@ class Gist extends Model {
     use HasFactory;
     
     protected $fillable = ['title', 'url', 'description','author_id','comments','issues'];
-    protected $with = ['author_id'];
 
     public function author() {
-        return $this->belongsTo(Author::class);
+        return $this->hasOne(Author::class);
+    }
+
+    public function files() {
+        return $this->hasMany(File::class);
     }
 
 }
